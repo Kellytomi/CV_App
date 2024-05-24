@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 
 void main() {
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,13 +16,22 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const CVView(),
+      home: AnimatedSplashScreen(
+        splash: SizedBox(
+          width: double.infinity,
+          height: double.infinity,
+          child: Image.asset('assets/cv.png'),
+        ), // Replace 'assets/splash_image.png' with your image path
+        nextScreen: const CVView(),
+        splashTransition: SplashTransition.fadeTransition,
+        duration: 2000, // Duration of the splash screen in milliseconds
+      ),
     );
   }
 }
 
 class CVView extends StatefulWidget {
-  const CVView({super.key});
+  const CVView({Key? key}) : super(key: key);
 
   @override
   _CVViewState createState() => _CVViewState();
@@ -110,7 +120,10 @@ class _CVViewState extends State<CVView> {
       appBar: AppBar(
         backgroundColor:
             const Color.fromARGB(255, 87, 5, 228), // Set app bar color
-        title: const Text('HNGx CV App'),
+        title: const Text(
+          'HNGx CV App',
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -132,7 +145,8 @@ class _CVViewState extends State<CVView> {
             buildCodeBlock('Bio:', bio),
             ElevatedButton(
               onPressed: () => _navigateToEditPage(context),
-              child: const Text('Edit CV'),
+              child: const Text('Edit CV',
+              style: TextStyle(color: Colors.purple, fontWeight: FontWeight.bold)),
             ),
           ],
         ),
@@ -181,7 +195,10 @@ class _EditCVPageState extends State<EditCVPage> {
       appBar: AppBar(
         backgroundColor:
             const Color.fromARGB(255, 87, 5, 228), // Set app bar color
-        title: const Text('Edit CV'),
+        title: const Text('Edit CV',
+            style:
+                TextStyle(color: Colors.white, 
+                fontWeight: FontWeight.bold)),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -209,10 +226,11 @@ class _EditCVPageState extends State<EditCVPage> {
                   Navigator.pop(context, updatedData);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Button color
+                  backgroundColor: Color.fromARGB(255, 87, 5, 228), // Button color
                   textStyle: const TextStyle(fontSize: 16),
                 ),
-                child: const Text('Save'),
+                child: const Text('Save',
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
               ),
             ],
           ),
